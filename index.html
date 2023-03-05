@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pharmveda</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="chat-window">
+    <div class="chat-header">
+      <h3>Pharmveda</h3>
+    </div>
+    <div class="chat-body">
+      <div class="chat-message bot-message">
+        <p>Hello! I'm here to help recommend medicines and ayurvedic alternatives for common symptoms. Please let me know your symptom. Enter no-more than 1 word</p>
+      </div>
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="input" placeholder="Type your message...">
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+  
+  <script>
+    const symptoms = {
+      fever: {
+        medicine: 'Paracetamol',
+        ayurvedic: 'Giloy'
+      },
+      headache: {
+        medicine: 'Aspirin',
+        ayurvedic: 'Ashwagandha'
+      },
+      cough: {
+        medicine: 'Cough syrup',
+        ayurvedic: 'Tulsi'
+      },
+      flu: {
+        medicine: 'Oseltamivir',
+        ayurvedic: 'Amalaki'
+      },
+      allergy: {
+        medicine: 'Cetirizine',
+        ayurvedic: 'Shirish'
+      },
+      heartburn: {
+        medicine: 'Omeprazole',
+        ayurvedic: 'Yastimadhu'
+      },
+      indigestion: {
+        medicine: 'Simethicone',
+        ayurvedic: 'Triphala'
+      },
+      constipation: {
+        medicine: 'Docusate',
+        ayurvedic: 'Haritaki'
+      },
+      diarrhea: {
+        medicine: 'Loperamide',
+        ayurvedic: 'Bilva'
+      },
+      anxiety: {
+        medicine: 'Alprazolam',
+        ayurvedic: 'Brahmi'
+      },
+      depression: {
+        medicine: 'Fluoxetine',
+        ayurvedic: 'Jatamansi'
+      },
+      insomnia: {
+        medicine: 'Zolpidem',
+        ayurvedic: 'Tagara'
+      },
+      stress: {
+        medicine: 'Propranolol',
+        ayurvedic: 'Mandukaparni'
+      },
+      arthritis: {
+        medicine: 'Celecoxib',
+        ayurvedic: 'Shallaki'
+      },
+      osteoarthritis: {
+        medicine: 'Acetaminophen',
+        ayurvedic: 'Guggulu'
+      },
+      psoriasis: {
+        medicine: 'Methotrexate',
+        ayurvedic: 'Neem'
+      },
+      eczema: {
+        medicine: 'Hydrocortisone',
+        ayurvedic: 'Neem'
+      },
+      acne: {
+        medicine: 'Benzoyl peroxide',
+        ayurvedic: 'Neem'
+      },
+      rosacea: {
+        medicine: 'Metronidazole',
+        ayurvedic: 'Manjistha'
+      },
+      hemorrhoids: {
+        medicine: 'Hydrocortisone',
+        ayurvedic: 'Triphala'
+      },
+      sunburn: {
+        medicine: 'Benadryl',
+        ayurvedic: 'Chandan/Aloe Vera'
+      },
+      ringworm: {
+        medicine: 'Terbinafine',
+        ayurvedic: 'Neem'
+      },
+      dandruff: {
+        medicine: 'Ketoconazole',
+        ayurvedic: 'Neem'
+      },
+      nausea: {
+        medicine: 'Ondansetron',
+        ayurvedic: 'Ashwagandha'
+      },
+      vomiting: {
+        medicine: 'Ondansetron',
+        ayurvedic: 'Jeerak'
+      },
+      cold: {
+        medicine: 'Cold medicine',
+        ayurvedic: 'Eucalyptus oil'
+      }
+    };
+
+    const chatBody = document.querySelector('.chat-body');
+    const input = document.getElementById('input');
+    const sendBtn = document.getElementById('send-btn');
+
+    function botMessage(message) {
+      const messageEl = document.createElement('div');
+      messageEl.classList.add('chat-message', 'bot-message');
+      messageEl.innerHTML = `
+        <p>${message}</p>
+      `;
+      chatBody.appendChild(messageEl);
+    }
+
+    function recommendMedicine(symptom) {
+      const lowerCaseSymptom = symptom.toLowerCase();
+      if (symptoms.hasOwnProperty(lowerCaseSymptom)) {
+        const medicine = symptoms[lowerCaseSymptom].medicine;
+        const ayurvedic = symptoms[lowerCaseSymptom].ayurvedic;
+        botMessage(`For ${symptom}, you can try taking ${medicine} or try the ayurvedic alternative ${ayurvedic}. Choose Ayurvedic alternative for no side effects.`);
+      } else {
+        botMessage(`Sorry, I don't have any recommendations for ${symptom}. Please try another symptom.`);
+      }
+    }
+
+    sendBtn.addEventListener('click', () => {
+      const symptom = input.value.trim();
+      if (symptom !== '') {
+        botMessage(`You: ${symptom}`);
+        recommendMedicine(symptom);
+        input.value = '';
+      }
+    });
+
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        const symptom = input.value.trim();
+        if (symptom !== '') {
+          botMessage(`You: ${symptom}`);
+          recommendMedicine(symptom);
+          input.value = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+
